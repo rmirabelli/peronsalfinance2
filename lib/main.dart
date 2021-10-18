@@ -19,8 +19,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
         accentColor: Colors.amber,
-        appBarTheme: AppBarTheme(color: Colors.grey),
-        textTheme: TextTheme(
+        appBarTheme: const AppBarTheme(color: Colors.grey),
+        textTheme: const TextTheme(
           bodyText1: TextStyle(
             fontSize: 14,
             fontStyle: FontStyle.italic,
@@ -42,7 +42,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<Transaction> _userTransactions = [
+  final List<Transaction> _unusedTransactions = [
     Transaction(
       id: UniqueKey().toString(),
       title: "New Shoes",
@@ -55,10 +55,12 @@ class _MyHomePageState extends State<MyHomePage> {
     ),
     Transaction(
       id: UniqueKey().toString(),
-      title: "Coffee",
+      title: 'coffee',
       amountInPennies: 478,
     ),
   ];
+
+  final List<Transaction> _userTransactions = [];
 
   void startAddNewTransaction(BuildContext ctx) {
     showModalBottomSheet(
@@ -112,7 +114,22 @@ class _MyHomePageState extends State<MyHomePage> {
                 elevation: 5.0,
               ),
             ),
-            TransactionList(_userTransactions),
+            _userTransactions.isEmpty
+                ? Column(children: [
+                    Text('No Transactions Yet'),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    Container(
+                      width: 220,
+                      height: 220,
+                      child: Image.asset(
+                        'assets/empty.png',
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ])
+                : TransactionList(_userTransactions),
           ],
         ),
       ),
