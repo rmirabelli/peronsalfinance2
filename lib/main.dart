@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'models/transaction.dart';
 import 'widgets/new_transaction.dart';
 import 'widgets/transaction_list.dart';
+import 'widgets/chart.dart';
 
 void main() {
   runApp(const MyApp());
@@ -109,10 +110,7 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             Container(
               width: double.infinity,
-              child: Card(
-                child: Text('chart'),
-                elevation: 5.0,
-              ),
+              child: Chart(_userTransactions),
             ),
             _userTransactions.isEmpty
                 ? Column(children: [
