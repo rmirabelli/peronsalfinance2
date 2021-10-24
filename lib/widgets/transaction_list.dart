@@ -15,46 +15,29 @@ class TransactionList extends StatelessWidget {
         itemBuilder: (ctx, index) {
           Transaction transaction = transactions[index];
           return Card(
-            child: Row(children: <Widget>[
-              Container(
-                margin: EdgeInsets.symmetric(
-                  vertical: 10,
-                  horizontal: 15,
-                ),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
-                  border: Border.all(
-                    width: 2,
-                    color: Colors.black,
+            elevation: 2,
+            child: ListTile(
+              leading: CircleAvatar(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: 3,
+                    horizontal: 4,
                   ),
-                ),
-                child: Text(
-                  '\$${(transaction.amountInPennies / 100).toStringAsFixed(2)}',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                    color: Colors.white, // ugly choice...
+                  child: FittedBox(
+                    child: Text(
+                        '\$${(transaction.amountInPennies / 100).toStringAsFixed(2)}'),
                   ),
                 ),
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    transaction.title,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                      color: Colors.blueGrey,
-                    ),
-                  ),
-                  Text(
-                    DateFormat('MMM d, yyyy').format(transaction.date),
-                    style: Theme.of(context).textTheme.bodyText1,
-                  ),
-                ],
-              )
-            ]),
+              title: Text(
+                transaction.title,
+                style: Theme.of(context).textTheme.bodyText2,
+              ),
+              subtitle: Text(
+                '${DateFormat.MMMMEEEEd().format(transaction.date)}',
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+            ),
           );
         },
         itemCount: transactions.length,
