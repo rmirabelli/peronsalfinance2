@@ -22,12 +22,14 @@ class MyApp extends StatelessWidget {
         accentColor: Colors.amber,
         appBarTheme: const AppBarTheme(color: Colors.grey),
         textTheme: const TextTheme(
-          bodyText1: TextStyle(
-            fontSize: 14,
-            fontStyle: FontStyle.italic,
-          ),
-          bodyText2: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-        ),
+            bodyText1: TextStyle(
+              fontSize: 14,
+              fontStyle: FontStyle.italic,
+            ),
+            bodyText2: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            button: TextStyle(
+              color: Colors.white,
+            )),
       ),
     );
   }
@@ -43,24 +45,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<Transaction> _unusedTransactions = [
-    Transaction(
-      id: UniqueKey().toString(),
-      title: "New Shoes",
-      amountInPennies: 3299,
-    ),
-    Transaction(
-      id: UniqueKey().toString(),
-      title: "Groceries",
-      amountInPennies: 8876,
-    ),
-    Transaction(
-      id: UniqueKey().toString(),
-      title: 'coffee',
-      amountInPennies: 478,
-    ),
-  ];
-
   final List<Transaction> _userTransactions = [];
 
   void startAddNewTransaction(BuildContext ctx) {
@@ -72,14 +56,21 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  void _addNewTransaction(String title, int amount) {
+  void _addNewTransaction(String title, int amount, DateTime date) {
     final newTransaction = Transaction(
       title: title,
       amountInPennies: amount,
       id: UniqueKey().toString(),
+      date: date,
     );
     setState(() {
       _userTransactions.add(newTransaction);
+    });
+  }
+
+  void _removeTransaction(String key) {
+    setState(() {
+      _userTransactions.removeWhere((element) => element.id == key);
     });
   }
 
@@ -127,7 +118,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                   ])
-                : TransactionList(_userTransactions),
+                : TransactionList(_userTransactions, _removeTransaction),
           ],
         ),
       ),

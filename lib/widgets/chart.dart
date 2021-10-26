@@ -29,7 +29,7 @@ class Chart extends StatelessWidget {
           'amount': sum / 100,
         };
       },
-    );
+    ).reversed.toList();
   }
 
   @override

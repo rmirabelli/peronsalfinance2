@@ -39,10 +39,13 @@ class Bar extends StatelessWidget {
               ],
             ),
           ),
-          FittedBox(
-            child: Text(
-              '\$${dailyAmount.toStringAsFixed(2)}',
-              style: TextStyle(fontSize: 9),
+          Container(
+            height: 16,
+            child: FittedBox(
+              child: Text(
+                '\$${dailyAmount.toStringAsFixed(2)}',
+                style: TextStyle(fontSize: 9),
+              ),
             ),
           ),
         ],
