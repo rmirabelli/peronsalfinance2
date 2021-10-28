@@ -47,7 +47,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _userTransactions = [];
 
-  void startAddNewTransaction(BuildContext ctx) {
+  void startAddNewTransaction(BuildContext ctx) async {
+    await Future.delayed(Duration(seconds: 2));
     showModalBottomSheet(
       context: ctx,
       builder: (bCtx) {
@@ -95,31 +96,37 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Icon(Icons.add),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Container(
-              width: double.infinity,
-              child: Chart(_userTransactions),
-            ),
-            _userTransactions.isEmpty
-                ? Column(children: [
-                    Text('No Transactions Yet'),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    Container(
-                      width: 220,
-                      height: 220,
-                      child: Image.asset(
-                        'assets/empty.png',
-                        fit: BoxFit.cover,
+        child: Container(
+          height: 400,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Container(
+                width: double.infinity,
+                child: Chart(_userTransactions),
+              ),
+              Divider(
+                color: Colors.black,
+              ),
+              _userTransactions.isEmpty
+                  ? Column(children: [
+                      Text('No Transactions Yet'),
+                      SizedBox(
+                        height: 8,
                       ),
-                    ),
-                  ])
-                : TransactionList(_userTransactions, _removeTransaction),
-          ],
+                      Container(
+                        width: 220,
+                        height: 220,
+                        child: Image.asset(
+                          'assets/empty.png',
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ])
+                  : TransactionList(_userTransactions, _removeTransaction),
+            ],
+          ),
         ),
       ),
     );
