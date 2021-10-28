@@ -95,31 +95,34 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Icon(Icons.add),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Container(
-              width: double.infinity,
-              child: Chart(_userTransactions),
-            ),
-            _userTransactions.isEmpty
-                ? Column(children: [
-                    Text('No Transactions Yet'),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    Container(
-                      width: 220,
-                      height: 220,
-                      child: Image.asset(
-                        'assets/empty.png',
-                        fit: BoxFit.cover,
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Container(
+                width: double.infinity,
+                child: Chart(_userTransactions),
+              ),
+              _userTransactions.isEmpty
+                  ? Column(children: [
+                      Text('No Transactions Yet'),
+                      SizedBox(
+                        height: 8,
                       ),
-                    ),
-                  ])
-                : TransactionList(_userTransactions, _removeTransaction),
-          ],
+                      Container(
+                        width: 220,
+                        height: 220,
+                        child: Image.asset(
+                          'assets/empty.png',
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ])
+                  : TransactionList(_userTransactions, _removeTransaction),
+            ],
+          ),
         ),
       ),
     );
