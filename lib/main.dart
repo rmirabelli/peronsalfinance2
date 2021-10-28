@@ -18,9 +18,9 @@ class MyApp extends StatelessWidget {
       title: 'Personal Finance Thing',
       home: MyHomePage(title: 'Finances'),
       theme: ThemeData(
-        primarySwatch: Colors.green,
+        primarySwatch: Colors.orange,
         accentColor: Colors.amber,
-        appBarTheme: const AppBarTheme(color: Colors.grey),
+        appBarTheme: const AppBarTheme(color: Colors.green),
         textTheme: const TextTheme(
             bodyText1: TextStyle(
               fontSize: 14,
@@ -46,8 +46,10 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _userTransactions = [];
+  double sliderValue = 50;
 
-  void startAddNewTransaction(BuildContext ctx) {
+  void startAddNewTransaction(BuildContext ctx) async {
+    await Future.delayed(Duration(seconds: 2));
     showModalBottomSheet(
       context: ctx,
       builder: (bCtx) {
@@ -66,6 +68,16 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _userTransactions.add(newTransaction);
     });
+
+    Transaction(
+      date: DateTime.now(),
+      id: 'not real',
+      title: 'cascade',
+      amountInPennies: 23,
+    )
+      ..printTransaction()
+      ..printTransaction()
+      ..printTransaction();
   }
 
   void _removeTransaction(String key) {
@@ -95,31 +107,37 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Icon(Icons.add),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Container(
-              width: double.infinity,
-              child: Chart(_userTransactions),
-            ),
-            _userTransactions.isEmpty
-                ? Column(children: [
-                    Text('No Transactions Yet'),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    Container(
-                      width: 220,
-                      height: 220,
-                      child: Image.asset(
-                        'assets/empty.png',
-                        fit: BoxFit.cover,
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Container(
+                width: double.infinity,
+                child: Chart(_userTransactions),
+              ),
+              Divider(
+                color: Colors.grey,
+              ),
+              _userTransactions.isEmpty
+                  ? Column(children: [
+                      Text('No Transactions Yet'),
+                      SizedBox(
+                        height: 8,
                       ),
-                    ),
-                  ])
-                : TransactionList(_userTransactions, _removeTransaction),
-          ],
+                      Container(
+                        width: 220,
+                        height: 220,
+                        child: Image.asset(
+                          'assets/empty.png',
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ])
+                  : TransactionList(_userTransactions, _removeTransaction),
+            ],
+          ),
         ),
       ),
     );
