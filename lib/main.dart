@@ -117,6 +117,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 width: double.infinity,
                 child: Chart(_userTransactions),
               ),
+              Placeholder(
+                color: Colors.red,
+                fallbackHeight: 100,
+              ),
               Divider(
                 color: Colors.grey,
               ),
